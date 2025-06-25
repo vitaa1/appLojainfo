@@ -1,0 +1,16 @@
+services:
+  mysql:
+    container_name: 'mysqlinfo'
+    image: 'mysql:latest'
+    environment:
+      - 'MYSQL_DATABASE=db_lojainformatica'
+      - 'MYSQL_PASSWORD=secret'
+      - 'MYSQL_ROOT_PASSWORD=root'
+      - 'MYSQL_USER=myuser'
+    ports:
+      - '3307:3306'
+    volumes:
+      - loja_informatica:/var/lib/mysqlinfo
+
+volumes:
+  loja_informatica:
