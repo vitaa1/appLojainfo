@@ -1,6 +1,6 @@
 package com.cadastroclientes.appcadastro.controllers;
-import com.cadastroclientes.appcadastro.domain.Fornecedor;
 
+import com.cadastroclientes.appcadastro.domain.Fornecedor;
 import com.cadastroclientes.appcadastro.service.FornecedorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +10,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/fornecedor")
 public class FornecedorController {
