@@ -1,5 +1,4 @@
 package com.cadastroclientes.appcadastro.domain;
-
 import jakarta.persistence.*;
 
 @Entity

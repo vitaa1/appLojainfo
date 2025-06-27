@@ -1,5 +1,4 @@
 package com.cadastroclientes.appcadastro.domain;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -9,15 +8,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    private String sexo;
+    private String sobrenome;
 
     public User() {
     }
 
-    public User(Long id, String nome, String sexo) {
+    public User(Long id, String nome, String sobrenome) {
         this.id = id;
         this.nome = nome;
-        this.sexo = sexo;
+        this.sobrenome = sobrenome;
     }
 
     public Long getId() {
@@ -36,11 +35,11 @@ public class User {
         this.nome = nome;
     }
 
-    public String getSexo() {
-        return sexo;
+    public String getSobrenome() {
+        return sobrenome;
     }
 
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
     }
 }

@@ -4,7 +4,6 @@ import com.cadastroclientes.appcadastro.domain.User;
 import com.cadastroclientes.appcadastro.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -39,5 +38,6 @@ public class UserService {
 
     private void updateUser (User entity, User obj) {
         entity.setNome(obj.getNome());
+        entity.setSobrenome(obj.getSobrenome());
     }
 }
