@@ -2,7 +2,11 @@ package com.cadastroclientes.appcadastro.controllers;
 
 import com.cadastroclientes.appcadastro.domain.User;
 import com.cadastroclientes.appcadastro.service.UserService;
+
+import jakarta.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -37,8 +41,19 @@ public class UserController {
         return ResponseEntity.created(uri).body(obj);
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User updateUser) {
+        try {
+            User updatedUser = service.update(updateUser, id);
+            return ResponseEntity.ok(updatedUser);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Usuário com ID " + id + " não encontrado.");
+        }
+    }
+    
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser (@PathVariable Long id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
