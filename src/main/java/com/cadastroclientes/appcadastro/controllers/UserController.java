@@ -1,60 +1,49 @@
 package com.cadastroclientes.appcadastro.controllers;
 
-import com.cadastroclientes.appcadastro.domain.User;
+import com.cadastroclientes.appcadastro.dto.UserDto;
 import com.cadastroclientes.appcadastro.service.UserService;
-
-import jakarta.persistence.EntityNotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/usuario")
+@RequestMapping("/usuarios")
 public class UserController {
 
     @Autowired
-    private UserService service;
-
-    @GetMapping
-    public ResponseEntity<List<User>> findAll() {
-        List<User> list = service.findAll();
-        return ResponseEntity.ok().body(list);
-    }
-
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<Optional<User>> findById(@PathVariable Long id) {
-        Optional<User> obj = service.findById(id);
-        return ResponseEntity.ok().body(obj);
-    }
+    private  UserService service;
 
     @PostMapping
-    public ResponseEntity<User> insert(@RequestBody User obj) {
-        obj = service.insert(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-        return ResponseEntity.created(uri).body(obj);
+    public ResponseEntity<UserDto> insert(@RequestBody UserDto userDto) {
+        UserDto savedUser = service.createUser(userDto);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long userId) {
+        UserDto userdto = service.getUserId(userId);
+        return ResponseEntity.ok(userdto);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UserDto>> getAllUsers() {
+        List<UserDto> users = service.getAllUsers();
+        return ResponseEntity.ok(users);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User updateUser) {
-        try {
-            User updatedUser = service.update(updateUser, id);
-            return ResponseEntity.ok(updatedUser);
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Usuário com ID " + id + " não encontrado.");
-        }
+    public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long userId,
+                                              @RequestBody UserDto updateUser) {
+        UserDto userDto = service.updateUser(userId, updateUser);
+        return ResponseEntity.ok(userDto);
     }
-    
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        service.deleteById(id);
-        return ResponseEntity.noContent().build();
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable("id") Long userId) {
+        service.deleteUser(userId);
+        return ResponseEntity.ok("Usuario deletado com sucesso");
     }
 }

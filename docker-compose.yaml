@@ -5,7 +5,7 @@ services:
     environment:
       - 'MYSQL_DATABASE=db_lojainformatica'
       - 'MYSQL_PASSWORD=secret'
-      - 'MYSQL_ROOT_PASSWORD=root'
+      - 'MYSQL_ROOT_PASSWORD=vitor123'
       - 'MYSQL_USER=myuser'
     ports:
       - '3307:3306'
